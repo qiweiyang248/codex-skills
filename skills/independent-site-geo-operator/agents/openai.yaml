@@ -1,0 +1,4 @@
+interface:
+  display_name: "Independent Site GEO Operator"
+  short_description: "AI search readiness for ecommerce sites"
+  default_prompt: "Use $independent-site-geo-operator to audit AI search visibility for a Shopify, WooCommerce, or WordPress ecommerce site and produce GEO scores, query maps, and citation content plans."

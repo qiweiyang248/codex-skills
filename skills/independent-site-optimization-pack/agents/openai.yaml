@@ -1,0 +1,4 @@
+interface:
+  display_name: "Independent Site Optimization Pack"
+  short_description: "Shopify, WooCommerce, WordPress growth pack"
+  default_prompt: "Use $independent-site-optimization-pack to audit a Shopify, WooCommerce, or WordPress ecommerce site and generate a complete executable optimization package."

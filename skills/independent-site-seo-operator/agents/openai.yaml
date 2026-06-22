@@ -1,0 +1,4 @@
+interface:
+  display_name: "Independent Site SEO Operator"
+  short_description: "Shopify and WooCommerce SEO update packs"
+  default_prompt: "Use $independent-site-seo-operator to audit a Shopify, WooCommerce, or WordPress ecommerce site and produce SEO fixes, platform CSVs, schema, and page copy."

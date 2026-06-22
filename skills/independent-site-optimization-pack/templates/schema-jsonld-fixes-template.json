@@ -1,0 +1,17 @@
+{
+  "fixes": [
+    {
+      "page_url": "",
+      "page_type": "",
+      "issue_type": "",
+      "file_path": "",
+      "current_issue": "",
+      "suggested_modification": "",
+      "unified_diff_patch": "",
+      "rollback_method": "",
+      "verification_method": "",
+      "priority": "",
+      "risk_level": ""
+    }
+  ]
+}
