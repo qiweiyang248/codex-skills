@@ -1,0 +1,7 @@
+interface:
+  display_name: "PDP Image Master"
+  short_description: "Plan, generate, QA, and batch ecommerce PDP/SKU image sets."
+  default_prompt: "Use this skill for ecommerce product detail images. Start from product images/evidence, detect category, create a manifest, audit claims, then plan or generate the PDP image set."
+
+policy:
+  allow_implicit_invocation: false

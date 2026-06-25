@@ -1,0 +1,10 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.env
+.venv/
+node_modules/
+pdp_output/
+contact_sheet.jpg
+*.tmp
+
