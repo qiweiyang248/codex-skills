@@ -1,0 +1,4 @@
+interface:
+  display_name: "GeoSEO Engine"
+  short_description: "SEO and GEO diagnostics for ecommerce sites"
+  default_prompt: "Use $geoseo-engine to audit an independent ecommerce site and produce a prioritized SEO, GEO, conversion, and implementation optimization package."

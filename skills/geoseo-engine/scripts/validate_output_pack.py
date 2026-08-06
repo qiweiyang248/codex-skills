@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate required optimization-pack files and key CSV columns."""
+"""Validate GeoSEO Engine output files and key CSV/JSON contracts."""
 
 from __future__ import annotations
 
@@ -14,14 +14,74 @@ REQUIRED_FILES = [
     "audit-report.md",
     "optimization-pack.md",
     "action-plan.md",
-    "shopify-content-update.csv",
-    "woocommerce-product-update.csv",
-    "wordpress-page-update.csv",
+    "seo-priority-fixes.csv",
+    "page-seo-update-sheet.csv",
     "image-alt-text-sheet.csv",
     "schema-jsonld-fixes.json",
     "internal-link-plan.md",
     "geo-content-plan.md",
+    "ai-readiness-scorecard.csv",
+    "geo-query-map.csv",
+    "ai-citation-content-plan.md",
+    "entity-schema-recommendations.json",
     "implementation-checklist.md",
+]
+
+PLATFORM_FILES = {
+    "shopify": "shopify-content-update.csv",
+    "woocommerce": "woocommerce-product-update.csv",
+    "wordpress": "wordpress-page-update.csv",
+}
+
+RECOMMENDATION_COLUMNS = [
+    "page_url",
+    "page_type",
+    "issue_type",
+    "current_value",
+    "suggested_value",
+    "target_field",
+    "modification_method",
+    "seo_impact",
+    "geo_impact",
+    "conversion_impact",
+    "priority",
+    "risk_level",
+    "verification_method",
+]
+
+PAGE_SEO_COLUMNS = [
+    "page_url",
+    "page_type",
+    "current_seo_title",
+    "recommended_seo_title",
+    "current_meta_description",
+    "recommended_meta_description",
+    "current_h1",
+    "recommended_h1",
+    "primary_keyword",
+    "search_intent",
+    "priority",
+    "verification_method",
+]
+
+AI_SCORE_COLUMNS = [
+    "component",
+    "score_0_5",
+    "weighted_points",
+    "evidence",
+    "recommended_action",
+    "priority",
+    "verification_method",
+]
+
+GEO_QUERY_COLUMNS = [
+    "topic",
+    "ai_query",
+    "buyer_intent",
+    "current_coverage",
+    "recommended_page_type",
+    "citation_hook",
+    "priority",
 ]
 
 SHOPIFY_COLUMNS = [
@@ -96,21 +156,33 @@ def read_header(path: Path) -> list[str]:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--outputs", default="outputs")
+    ap.add_argument("--outputs", default="outputs/geoseo-engine")
+    ap.add_argument(
+        "--require-platform",
+        choices=["none", "shopify", "woocommerce", "wordpress"],
+        default="none",
+    )
     ap.add_argument("--json-out", default="")
     args = ap.parse_args()
 
     out_dir = Path(args.outputs)
     result = {"missing_files": [], "column_issues": [], "valid": True}
-    for name in REQUIRED_FILES:
+    required_files = list(REQUIRED_FILES)
+    if args.require_platform != "none":
+        required_files.append(PLATFORM_FILES[args.require_platform])
+    for name in required_files:
         if not (out_dir / name).exists():
             result["missing_files"].append(name)
 
     checks = {
+        "seo-priority-fixes.csv": RECOMMENDATION_COLUMNS,
+        "page-seo-update-sheet.csv": PAGE_SEO_COLUMNS,
         "shopify-content-update.csv": SHOPIFY_COLUMNS,
         "woocommerce-product-update.csv": WOOCOMMERCE_COLUMNS,
         "wordpress-page-update.csv": WORDPRESS_COLUMNS,
         "image-alt-text-sheet.csv": IMAGE_COLUMNS,
+        "ai-readiness-scorecard.csv": AI_SCORE_COLUMNS,
+        "geo-query-map.csv": GEO_QUERY_COLUMNS,
     }
     for name, expected in checks.items():
         path = out_dir / name
@@ -120,12 +192,13 @@ def main() -> int:
             if missing:
                 result["column_issues"].append({"file": name, "missing_columns": missing})
 
-    schema_path = out_dir / "schema-jsonld-fixes.json"
-    if schema_path.exists():
-        try:
-            json.loads(schema_path.read_text(encoding="utf-8"))
-        except json.JSONDecodeError as exc:
-            result["column_issues"].append({"file": "schema-jsonld-fixes.json", "error": str(exc)})
+    for json_name in ["schema-jsonld-fixes.json", "entity-schema-recommendations.json"]:
+        json_path = out_dir / json_name
+        if json_path.exists():
+            try:
+                json.loads(json_path.read_text(encoding="utf-8"))
+            except json.JSONDecodeError as exc:
+                result["column_issues"].append({"file": json_name, "error": str(exc)})
 
     result["valid"] = not result["missing_files"] and not result["column_issues"]
     if args.json_out:

@@ -14,7 +14,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 
-UA = "CodexIndependentSiteSEO/1.0 (+dry-run audit)"
+UA = "CodexGeoSEOEngine/1.0 (+read-only audit)"
 
 
 def fetch_text(url: str, timeout: int = 20) -> tuple[int | None, str]:

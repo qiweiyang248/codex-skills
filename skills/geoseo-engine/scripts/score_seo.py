@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Simple objective SEO scoring for extracted pages."""
+"""Score objective page-level SEO hygiene for classified pages.
+
+This helper intentionally does not represent the complete GeoSEO Engine SEO
+score. Site architecture, crawl/index coverage, keyword fit, performance,
+internal linking, and conversion quality still require the unified audit.
+"""
 
 from __future__ import annotations
 
@@ -63,8 +68,20 @@ def main() -> int:
         score, issues = page_score(page)
         rows.append({"url": page.get("url", ""), "page_type": page.get("page_type", ""), "score": score, "issues": issues})
     avg = round(sum(r["score"] for r in rows) / len(rows), 1) if rows else 0
-    Path(args.out).write_text(json.dumps({"seo_score": avg, "pages": rows}, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(f"Wrote {args.out}; SEO score {avg}")
+    sample_size = len(rows)
+    confidence = "low" if sample_size < 10 else "medium" if sample_size < 50 else "high"
+    result = {
+        "objective_page_hygiene_score": avg,
+        "sample_size": sample_size,
+        "coverage_confidence": confidence,
+        "coverage_note": (
+            "Template-level helper only; excludes sitewide crawl/index architecture, "
+            "keyword fit, performance, internal linking, and conversion judgment."
+        ),
+        "pages": rows,
+    }
+    Path(args.out).write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(f"Wrote {args.out}; objective page hygiene score {avg} ({sample_size} pages, {confidence} coverage confidence)")
     return 0
 
 
