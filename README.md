@@ -4,9 +4,7 @@ Personal Codex skills shared from this repository.
 
 ## Skills
 
-- `independent-site-geo-operator`
-- `independent-site-optimization-pack`
-- `independent-site-seo-operator`
+- `geoseo-engine`
 - `pdp-image-master`
 - `taste-skill`
 
@@ -15,9 +13,7 @@ Personal Codex skills shared from this repository.
 In Codex, ask it to install a skill from one of these GitHub paths:
 
 ```text
-https://github.com/qiweiyang248/codex-skills/tree/main/skills/independent-site-geo-operator
-https://github.com/qiweiyang248/codex-skills/tree/main/skills/independent-site-optimization-pack
-https://github.com/qiweiyang248/codex-skills/tree/main/skills/independent-site-seo-operator
+https://github.com/qiweiyang248/codex-skills/tree/main/skills/geoseo-engine
 https://github.com/qiweiyang248/codex-skills/tree/main/skills/pdp-image-master
 https://github.com/qiweiyang248/codex-skills/tree/main/skills/taste-skill
 ```

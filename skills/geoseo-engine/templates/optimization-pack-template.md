@@ -1,4 +1,4 @@
-# Independent Site SEO + GEO Optimization Pack
+# GeoSEO Engine Optimization Pack
 
 ## 1. Current Diagnosis
 
