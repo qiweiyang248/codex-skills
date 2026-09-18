@@ -1,0 +1,4 @@
+interface:
+  display_name: "BP"
+  short_description: "策划与制作市场进入研究、商业合作提案、经营复盘及商业PPT视觉重设计"
+  default_prompt: "使用 $bp 根据资料和已有确认选择汇报模式，制作有证据、可决策、可编辑的商业PPT。"
